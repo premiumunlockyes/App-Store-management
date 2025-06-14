@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অ্যাপ ম্যানেজমেন্ট সিস্টেম</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bdf;
+            --secondary-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #fd7e14;
+            --info-color: #17a2b8;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --white: #fff;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* হেডার স্টাইল */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        /* ফর্ম স্টাইল */
+        .form-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+            outline: none;
+        }
+        
+        /* ইমেজ আপলোড স্টাইল */
+        .image-upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .image-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px dashed var(--dark-gray);
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .image-upload-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload-btn:hover {
+            background-color: #3a5bd0;
+        }
+        
+        #imageUpload {
+            display: none;
+        }
+        
+        /* বাটন স্টাইল */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a5bd0;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: var(--white);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        /* টেবিল স্টাইল */
+        .table-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: 500;
+        }
+        
+        tr:hover {
+            background-color: rgba(74, 107, 223, 0.05);
+        }
+        
+        .app-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: var(--white);
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--white);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e06c1b;
+        }
+        
+        /* মেসেজ স্টাইল */
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: inherit;
+        }
+        
+        /* মোবাইল রেস্পন্সিভ */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <i class="fas fa-mobile-alt"></i> অ্যাপ ম্যানেজমেন্ট সিস্টেম
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- মেসেজ ডিসপ্লে এরিয়া -->
+        <div id="messageArea"></div>
+
+        <!-- অ্যাপ এডিট/অ্যাড ফর্ম -->
+        <div class="form-container">
+            <h2 class="form-title" id="formTitle">নতুন অ্যাপ যোগ করুন</h2>
+            <form id="appForm">
+                <input type="hidden" id="appId">
+                
+                <!-- ইমেজ আপলোড সেকশন -->
+                <div class="image-upload-container">
+                    <div class="image-preview" id="imagePreview">
+                        <i class="fas fa-mobile-alt" style="font-size: 40px; color: var(--dark-gray);"></i>
+                    </div>
+                    <label for="imageUpload" class="image-upload-btn">
+                        <i class="fas fa-upload"></i> অ্যাপ আইকন সিলেক্ট করুন
+                    </label>
+                    <input type="file" id="imageUpload" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <label for="appName">অ্যাপ নাম</label>
+                    <input type="text" class="form-control" id="appName" required>
+                </div>
+                <div class="form-group">
+                    <label for="developer">ডেভেলপার</label>
+                    <input type="text" class="form-control" id="developer" required>
+                </div>
+                <div class="form-group">
+                    <label for="version">ভার্সন</label>
+                    <input type="text" class="form-control" id="version" required>
+                </div>
+                <div class="form-group">
+                    <label for="downloadLink">ডাউনলোড লিঙ্ক (Google Drive)</label>
+                    <input type="url" class="form-control" id="downloadLink" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">যোগ করুন</button>
+                    <button type="button" class="btn btn-danger" id="cancelBtn" style="display: none;">বাতিল করুন</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- অ্যাপ লিস্ট টেবিল -->
+        <div class="table-container">
+            <h2 class="form-title">অ্যাপ তালিকা</h2>
+            <table id="appTable">
+                <thead>
+                    <tr>
+                        <th>আইকন</th>
+                        <th>অ্যাপ নাম</th>
+                        <th>ডেভেলপার</th>
+                        <th>ভার্সন</th>
+                        <th>ডাউনলোড</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody id="appTableBody">
+                    <!-- ডাইনামিকভাবে ডাটা লোড হবে -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // অ্যাপ ডাটা স্টোর করুন (লোকাল স্টোরেজ ব্যবহার)
+        let apps = JSON.parse(localStorage.getItem('apps')) || [];
+        let editMode = false;
+        let currentEditId = null;
+        let selectedImage = null;
+
+        // DOM এলিমেন্ট
+        const appForm = document.getElementById('appForm');
+        const appTableBody = document.getElementById('appTableBody');
+        const formTitle = document.getElementById('formTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const messageArea = document.getElementById('messageArea');
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // ইমেজ আপলোড হ্যান্ডলার
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    selectedImage = event.target.result;
+                    imagePreview.innerHTML = `<img src="${selectedImage}" alt="অ্যাপ আইকন">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ফর্ম সাবমিট হ্যান্ডলার
+        appForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const appData = {
+                id: Date.now().toString(),
+                name: document.getElementById('appName').value,
+                developer: document.getElementById('developer').value,
+                version: document.getElementById('version').value,
+                downloadLink: document.getElementById('downloadLink').value,
+                image: selectedImage || 'default' // ডিফল্ট আইকন যদি ছবি সিলেক্ট না করা হয়
+            };
+
+            if (editMode) {
+                // এডিট মোড
+                const index = apps.findIndex(app => app.id === currentEditId);
+                if (index !== -1) {
+                    // যদি নতুন ছবি সিলেক্ট না করা হয়, পুরানো ছবি রাখুন
+                    if (!selectedImage && apps[index].image !== 'default') {
+                        appData.image = apps[index].image;
+                    }
+                    apps[index] = { ...appData, id: currentEditId };
+                    showMessage('অ্যাপ সফলভাবে আপডেট করা হয়েছে!', 'success');
+                }
+            } else {
+                // নতুন অ্যাপ যোগ করুন
+                apps.push(appData);
+                showMessage('অ্যাপ সফলভাবে যোগ করা হয়েছে!', 'success');
+            }
+
+            // ফর্ম রিসেট করুন এবং ডাটা সেভ করুন
+            resetForm();
+            saveApps();
+            renderAppTable();
+        });
+
+        // বাতিল বাটন হ্যান্ডলার
+        cancelBtn.addEventListener('click', resetForm);
+
+        // অ্যাপ টেবিল রেন্ডার করুন
+        function renderAppTable() {
+            appTableBody.innerHTML = '';
+            
+            if (apps.length === 0) {
+                appTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center;">কোন অ্যাপ পাওয়া যায়নি</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            apps.forEach(app => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        ${app.image === 'default' ? 
+                            `<i class="fas fa-mobile-alt" style="font-size: 24px; color: var(--dark-gray);"></i>` : 
+                            `<img src="${app.image}" class="app-image" alt="${app.name}">`}
+                    </td>
+                    <td>${app.name}</td>
+                    <td>${app.developer}</td>
+                    <td>${app.version}</td>
+                    <td>
+                        <a href="${app.downloadLink}" target="_blank" class="btn btn-success btn-sm">
+                            <i class="fas fa-download"></i> ডাউনলোড
+                        </a>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="editApp('${app.id}')" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> এডিট
+                            </button>
+                            <button onclick="deleteApp('${app.id}')" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> ডিলিট
+                            </button>
+                        </div>
+                    </td>
+                `;
+                appTableBody.appendChild(row);
+            });
+        }
+
+        // অ্যাপ এডিট ফাংশন
+        function editApp(id) {
+            const app = apps.find(app => app.id === id);
+            if (app) {
+                editMode = true;
+                currentEditId = id;
+                
+                document.getElementById('appId').value = app.id;
+                document.getElementById('appName').value = app.name;
+                document.getElementById('developer').value = app.developer;
+                document.getElementById('version').value = app.version;
+                document.getElementById('downloadLink').value = app.downloadLink;
+                
+                // ইমেজ প্রিভিউ সেট করুন
+                if (app.image !== 'default') {
+                    selectedImage = app.image;
+                    imagePreview.innerHTML = `<img src="${app.image}" alt="অ্যাপ আইকন">`;
+                } else {
+                    selectedImage = null;
+                    imagePreview.innerHTML = `<i class="fas fa-mobile-alt" style="font-size: 40px; color: var(--dark-gray);"></i>`;
+                }
+                
+                formTitle.textContent = 'অ্যাপ এডিট করুন';
+                submitBtn.textContent = 'আপডেট করুন';
+                cancelBtn.style.display = 'inline-block';
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // অ্যাপ ডিলিট ফাংশন
+        function deleteApp(id) {
+            if (confirm('আপনি কি এই অ্যাপ ডিলিট করতে চান?')) {
+                apps = apps.filter(app => app.id !== id);
+                saveApps();
+                renderAppTable();
+                showMessage('অ্যাপ সফলভাবে ডিলিট করা হয়েছে!', 'success');
+                
+                if (editMode && currentEditId === id) {
+                    resetForm();
+                }
+            }
+        }
+
+        // ফর্ম রিসেট করুন
+        function resetForm() {
+            appForm.reset();
+            editMode = false;
+            currentEditId = null;
+            selectedImage = null;
+            document.getElementById('appId').value = '';
+            formTitle.textContent = 'নতুন অ্যাপ যোগ করুন';
+            submitBtn.textContent = 'যোগ করুন';
+            cancelBtn.style.display = 'none';
+            imagePreview.innerHTML = '<i class="fas fa-mobile-alt" style="font-size: 40px; color: var(--dark-gray);"></i>';
+            imageUpload.value = '';
+        }
+
+        // ডাটা লোকাল স্টোরেজে সেভ করুন
+        function saveApps() {
+            localStorage.setItem('apps', JSON.stringify(apps));
+        }
+
+        // মেসেজ শো করুন
+        function showMessage(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button class="close-btn" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            
+            messageArea.innerHTML = '';
+            messageArea.appendChild(alertDiv);
+            
+            // 5 সেকেন্ড পর মেসেজ অটো হাইড
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        // প্রথম লোডে টেবিল রেন্ডার করুন
+        document.addEventListener('DOMContentLoaded', renderAppTable);
+    </script>
+</body>
+</html>
